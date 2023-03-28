@@ -21,11 +21,10 @@ public class MyLinkedList<K, V> {
         MyNode<K, V> newNode = new MyNode(key, value);
         if (head == null) {
             head = newNode;
-            tail = newNode;
         } else {
             tail.next = newNode;
-            tail = newNode;
         }
+        tail=newNode;
     }
 
     public void show() {
@@ -83,11 +82,30 @@ public class MyLinkedList<K, V> {
         }
         return false;
     }
+    public boolean delete(K key) {
+        MyNode<K, V> temp = head;
+        MyNode<K, V> temp2 = head;
+        MyNode<K, V> temp3 = head;
+        int count = 0;
+        while (temp != null & temp2 != null & temp3 != null) {
+            count++;
+            if (count > 2) {
+                temp3 = temp3.next;
+            }
+            if (temp.key == key) {
+                temp2 = temp2.next;
+                temp3.next = temp2;
+                return true;
+            }
+            temp = temp.next;
+            temp2 = temp2.next;
+        }
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		return "MyLinkedList [head=" + head + "]";
-	}
+    @Override
+    public String toString() {
+        return " \n{" + head + "}";
     
-    
+}
 }

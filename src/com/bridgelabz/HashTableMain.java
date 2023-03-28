@@ -6,19 +6,27 @@ public class HashTableMain {
 
 	        HashTable<String, Integer> hashTable = new HashTable(6);
 
-	        System.out.println(hashTable.bucketArray);
-	        for (MyLinkedList<String,Integer> list:hashTable.bucketArray) {
-	            System.out.println(list);
-	        }
 
 	        String[] wordsArray = paraGraph.split(" ");
 	        for (String word : wordsArray) {
-	            int index = hashTable.getIndex(word);
-	            System.out.println(word + " -> " + word.hashCode() + " -> " + index);
-	           
+	     Integer currentFrequency = hashTable.get(word);
+	             if(currentFrequency == null)
+	                 currentFrequency = 1;
+	             else
+	                 currentFrequency++;
+	             hashTable.addOrUpdate(word,currentFrequency);
 	        }
 
 	        System.out.println(hashTable);
+	        
+	        
+	        if(hashTable.remove("avoidable"))
+	            System.out.println("Given Word is Removed!");
+	        else
+	            System.out.println("Word is NOT Removed!");
+
+	        System.out.println(hashTable);
 	    }
+	 
 	}
 

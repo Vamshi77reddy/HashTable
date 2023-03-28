@@ -9,7 +9,6 @@ public class HashTable<K, V> {
 
 	    List<MyLinkedList<K, V>> bucketArray = new ArrayList<>(bucketSize);
 
-	    // array list size increases at run-time , thats why it is called dynamic array
 
 	   
 	    public HashTable(int bucketSize) {
@@ -23,6 +22,26 @@ public class HashTable<K, V> {
 	        int index = Math.abs(key.hashCode()) % bucketSize;
 	        return index;
 	    }
+	    public void addOrUpdate(K key, V value) {
+	        int index = getIndex(key);
+	        MyLinkedList<K, V> myLinkedList = bucketArray.get(index);
+	        if (myLinkedList == null) {
+	            myLinkedList = new MyLinkedList<>();
+	            bucketArray.add(index, myLinkedList);
+	            myLinkedList.add(key, value);
+	        } else {
+	            MyNode<K, V> currentNode = myLinkedList.search(key);
+	            if(currentNode != null)
+	                currentNode.value = value;
+	            else
+	                myLinkedList.add(key, value);
+	        }
+	    }
+	    public boolean remove(K key){
+	        int index= getIndex(key);
+	        MyLinkedList<K, V> myLinkedList = bucketArray.get(index);
+	        return (myLinkedList.delete(key));
+	    }
 	    public V get(K key) {
 	        int index = getIndex(key);
 	        MyLinkedList<K, V> myLinkedList = bucketArray.get(index);
@@ -32,12 +51,13 @@ public class HashTable<K, V> {
 	        return currentNode != null ? currentNode.value : null;
 	    }
 
-		@Override
-		public String toString() {
-			return "HashTable [bucketSize=" + bucketSize + ", bucketArray=" + bucketArray + "]";
-		}
+	    @Override
+	    public String toString() {
+	        return "HashTable{" +
+	                "bucketArray=" + bucketArray +
+	                '}';
 		
 	    
+	    }}    
 	    
-	    
-}
+
